@@ -72,11 +72,10 @@ export class AppStore {
     this.setLoading(true)
     try {
       const res = await api.gePostQuestions(ids)
-      if (res?.data) {
-        this.setPostQuestions(res?.data)
-      }
+      res?.data ? this.setPostQuestions(res?.data) : this.setPostQuestions({})
     } catch (error) {
       console.log('error in get Post questions: ', error)
+      this.setPostQuestions({})
     } finally {
       this.setLoading(false)
     }
@@ -84,7 +83,7 @@ export class AppStore {
 
   @computed
   get questionsitems() {
-    return toJS(this.postQuestions.items)
+    return toJS(this?.postQuestions?.items)
   }
 
   @computed
@@ -104,7 +103,7 @@ export class AppStore {
  
   @computed
   get totalQuestionsitems() {
-    return this.postQuestions.items?.length || 0
+    return this.postQuestions?.items?.length || 0
   }
 
   @computed

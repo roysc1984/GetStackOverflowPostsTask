@@ -1,13 +1,12 @@
-import { StatusBar } from 'expo-status-bar'
 import React from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet, StatusBar } from 'react-native'
 import StackOverflow from './src/Screens/StackOverflowPosts'
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
+     <StatusBar backgroundColor={'gray'} barStyle="light-content" />
       <StackOverflow />
-      <StatusBar style="auto" />
     </SafeAreaView>
   )
 }

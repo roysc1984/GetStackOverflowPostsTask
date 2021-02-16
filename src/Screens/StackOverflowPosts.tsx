@@ -19,7 +19,7 @@ const StackOverflow: FC = () => {
   const [webViewSpinner, setwebViewSpinner] = useState<boolean>(true)
   const [selectedSort, setselectedSort] = useState<number>(0)
   const [selectedCard, setCelectedCard] = useState<QuestionsItem| undefined>(undefined)
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
   const { appStore } = useStores()
 
   const toggleSwitch = () => {
@@ -45,9 +45,7 @@ const StackOverflow: FC = () => {
   }
 
   useEffect(() => {
-    if (userId) {
-      appStore?.gePostQuestions(userId)
-    }
+    userId ? appStore?.gePostQuestions(userId) : appStore.setPostQuestions({})  
   }, [userIdBlur])
 
   return (
@@ -99,22 +97,22 @@ const StackOverflow: FC = () => {
           />
         </TouchableOpacity>
       </KeyboardAvoidingView>
-      {appStore?.questionsitems && appStore?.questionsitems?.length === 0 && 
-        <TextMode style={styles.title}>{'No data found'}</TextMode>
-      }
-      {appStore?.questionsitems && appStore?.questionsitems?.length > 0 && (
-        <View style={styles.flexOneContainer}>
-          <Spinner isLoading={appStore?.loading} />
-          <UserDetails />
-          <FilterQuestion selectedSort={selectedSort} setselectedSort={setselectedSort} />
-          <QuestionCards selectedSort={selectedSort} onItemPress={onPressCard} />
-        </View>
+      <View style={styles.flexOneContainer}>
+        <Spinner isLoading={appStore?.loading} />
+        {appStore?.questionsitems && appStore?.totalQuestionsitems === 0 &&
+          <TextMode style={styles.title}>{'No data found'}</TextMode>
+        }
+        {appStore?.totalQuestionsitems > 0 && (
+          <View style={styles.flexOneContainer}>
+            <UserDetails />
+            <FilterQuestion selectedSort={selectedSort} setselectedSort={setselectedSort} />
+            <QuestionCards selectedSort={selectedSort} onItemPress={onPressCard} />
+            <View style={isEnabledLightMode ? [styles.totalQuestions, styles.bgColorLight] : [styles.totalQuestions, styles.bgColorDark]}>
+              <TextMode>{`Total of ${appStore?.totalQuestionsitems} questions found`}</TextMode>
+            </View>
+          </View>
         )}
-      {appStore?.questionsitems && appStore?.questionsitems?.length > 0 && (
-        <View style={isEnabledLightMode ? [styles.totalQuestions, styles.bgColorLight] : [styles.totalQuestions, styles.bgColorDark]}>
-          <TextMode>{`Total of ${appStore?.totalQuestionsitems} questions found`}</TextMode>
-        </View>
-      )}
+      </View>
     </View>
   )
 }
@@ -130,7 +128,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: 35
   },
   switch: {
     alignItems: 'center'
@@ -160,12 +157,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000'
   },
   totalQuestions : {
-    position: 'absolute',
-    left: 10,
-    right: 0,
-    bottom: 0,
-    height: 35,
-    justifyContent: 'center'
+    marginHorizontal: 10,
+    paddingBottom: 10
   },
   inputContainer: {
     flexDirection: 'row',

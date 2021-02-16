@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react'
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { QuestionsItem, SORT_OPTION } from '../Stores/AppStore'
 import { useStores } from '../Stores/StoreContext'
@@ -10,11 +10,10 @@ interface Props {
   selectedSort: SORT_OPTION
 }
 
-
 const QuestionCards: FC<Props> = ({ onItemPress, selectedSort }) => {
   const { appStore } = useStores()
 
-  const sortedQuestionsBytype = () => {
+  const sortedQuestionsBytype = useMemo(() => {
     switch (selectedSort) {
       case SORT_OPTION.DATE:
         return appStore.getSortQuestionsitemsDate!
@@ -23,7 +22,7 @@ const QuestionCards: FC<Props> = ({ onItemPress, selectedSort }) => {
       case SORT_OPTION.VIEWS:
         return appStore.getSortQuestionsitemsViews!
     }
-  } 
+  },[selectedSort])
 
   const renderCard = ({ item }: { item: QuestionsItem }) => {
     return (
@@ -35,13 +34,12 @@ const QuestionCards: FC<Props> = ({ onItemPress, selectedSort }) => {
   }
 
   const keyExtractor = (item: QuestionsItem, index: number) => `${item.question_id || index}`
-  const sortedQuestions = sortedQuestionsBytype()
 
   return (
     <View  style={[styles.listContentStyle]}>
       <View style={styles.listContainer}>
         <FlatList
-          data={sortedQuestions}
+          data={sortedQuestionsBytype}
           showsVerticalScrollIndicator={false}
           keyExtractor={keyExtractor}
           renderItem={renderCard}
@@ -58,7 +56,7 @@ export default observer(QuestionCards)
 
 const styles = StyleSheet.create({
   listContainer: {
-    paddingBottom: 35,
+    paddingBottom: 10,
     flex: 1
   },
   listContentStyle: {

@@ -129,14 +129,15 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: 35
   },
   switch: {
     alignItems: 'center'
   },
   switchContainer: {
     alignItems: 'flex-end',
-    marginTop: 20,
+    marginTop: 30,
     marginHorizontal: 15
   },
   userIdInput:{
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
   },
   totalQuestions : {
     position: 'absolute',
-    left: 0,
+    left: 10,
     right: 0,
     bottom: 0,
     height: 35,

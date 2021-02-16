@@ -65,7 +65,6 @@ export class AppStore {
 
   @action
   setLightMode = (mode: boolean) => {
-    console.log('mode', mode)
     this.lightMode = mode
   }
 

@@ -1,0 +1,12 @@
+{
+  "name": "my-project-cyrus-security",
+  "displayName": "my-project-cyrus-security",
+  "expo": {
+    "name": "my-project-cyrus-security",
+    "slug": "my-project-cyrus-security",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

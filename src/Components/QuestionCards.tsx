@@ -22,7 +22,7 @@ const QuestionCards: FC<Props> = ({ onItemPress, selectedSort }) => {
       case SORT_OPTION.VIEWS:
         return appStore.getSortQuestionsitemsViews!
     }
-  },[selectedSort])
+  },[selectedSort, appStore.postQuestions])
 
   const renderCard = ({ item }: { item: QuestionsItem }) => {
     return (
